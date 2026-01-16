@@ -19,10 +19,18 @@ type RankConfig struct {
 	SilverMax int `json:"silver_max"`
 }
 
+type LoggingConfig struct {
+	Level    string `json:"level"`     // debug, info, warn, error
+	Format   string `json:"format"`    // json, text
+	Output   string `json:"output"`    // stdout, file
+	FilePath string `json:"file_path"` // path to log file if output is file
+}
+
 type Config struct {
 	Server    ServerConfig   `json:"server"`
 	Database  DatabaseConfig `json:"database"`
 	Ranks     RankConfig     `json:"ranks"`
+	Logging   LoggingConfig  `json:"logging"`
 	JWTSecret string         `json:"jwt_secret"`
 }
 
