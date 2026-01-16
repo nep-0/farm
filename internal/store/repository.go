@@ -9,6 +9,7 @@ type Repository interface {
 	GetAllCustomers() ([]*models.Customer, error)
 	UpdateCustomerCredits(id string, credits int) (*models.Customer, error)
 	UpdateCustomerRole(id string, role string) (*models.Customer, error)
+	UpdateCustomerName(id string, name string) (*models.Customer, error)
 	AddProduct(p *models.Product) error
 	GetProduct(id string) (*models.Product, error)
 	AddActivity(a *models.Activity) error

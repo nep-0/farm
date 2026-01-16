@@ -3,4 +3,5 @@ server
 
 config.json
 
-farm.db
+*.db
+*.log

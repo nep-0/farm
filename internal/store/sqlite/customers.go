@@ -67,3 +67,11 @@ func (s *SQLiteStore) UpdateCustomerRole(id string, role string) (*models.Custom
 	}
 	return s.GetCustomer(id)
 }
+
+func (s *SQLiteStore) UpdateCustomerName(id string, name string) (*models.Customer, error) {
+	_, err := s.db.Exec("UPDATE customers SET name = ? WHERE id = ?", name, id)
+	if err != nil {
+		return nil, err
+	}
+	return s.GetCustomer(id)
+}
