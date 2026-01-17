@@ -28,9 +28,8 @@ func (h *Handler) Signup(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "error generating salt"})
 	}
 
-	// Hash password with Salt (and still can use Pepper if desired, but user asked for "different salt for each user")
-	// Combination: password + salt
-	hash, err := auth.HashPassword(req.Password + salt)
+	// Hash password with Salt
+	hash, err := auth.HashPassword(req.Password, salt)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "error processing password"})
 	}
@@ -74,7 +73,7 @@ func (h *Handler) Login(c echo.Context) error {
 	}
 
 	// Verify password + salt
-	if !auth.CheckPasswordHash(req.Password+customer.Salt, customer.Password) {
+	if !auth.CheckPasswordHash(req.Password, customer.Salt, customer.Password) {
 		return c.JSON(http.StatusUnauthorized, map[string]string{"error": "invalid credentials"})
 	}
 

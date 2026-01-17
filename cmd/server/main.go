@@ -6,6 +6,8 @@ import (
 	"farm/internal/auth"
 	"farm/internal/config"
 	"farm/internal/logger"
+	"farm/internal/store"
+	"farm/internal/store/postgres"
 	"farm/internal/store/sqlite"
 	"log/slog"
 	"os"
@@ -30,11 +32,24 @@ func main() {
 		os.Exit(1)
 	}
 
-	// 3. Init Store (SQLite)
-	slog.Info("Connecting to database", "connection_string", cfg.Database.ConnectionString)
-	s, err := sqlite.NewSQLiteStore(cfg)
-	if err != nil {
-		slog.Error("Failed to connect to database", "error", err)
+	// 3. Init Store
+	slog.Info("Connecting to database", "driver", cfg.Database.Driver, "connection_string", cfg.Database.ConnectionString)
+
+	var s store.Repository
+	var errStore error
+
+	switch cfg.Database.Driver {
+	case "sqlite":
+		s, errStore = sqlite.NewSQLiteStore(cfg)
+	case "postgres":
+		s, errStore = postgres.NewPostgresStore(cfg)
+	default:
+		slog.Error("Unsupported database driver", "driver", cfg.Database.Driver)
+		os.Exit(1)
+	}
+
+	if errStore != nil {
+		slog.Error("Failed to connect to database", "error", errStore)
 		os.Exit(1)
 	}
 
