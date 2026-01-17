@@ -1,0 +1,20 @@
+{
+  "server": {
+    "port": ":8080"
+  },
+  "database": {
+    "driver": "sqlite",
+    "connection_string": "farm.db"
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "output": "file",
+    "file_path": "server.log"
+  },
+  "jwt_secret": "jwt_secret",
+  "ranks": {
+    "bronze_max": 100,
+    "silver_max": 500
+  }
+}

@@ -69,7 +69,8 @@ func (s *SQLiteStore) ReserveItem(r *models.Reservation) error {
 	}
 
 	// 2. Check and Decrement Stock
-	if r.Type == models.ReservationProduct {
+	switch r.Type {
+	case models.ReservationProduct:
 		var qty int
 		err = tx.QueryRow("SELECT quantity FROM products WHERE id = ?", r.ItemID).Scan(&qty)
 		if err != nil {
@@ -81,7 +82,7 @@ func (s *SQLiteStore) ReserveItem(r *models.Reservation) error {
 		if _, err := tx.Exec("UPDATE products SET quantity = quantity - 1 WHERE id = ?", r.ItemID); err != nil {
 			return err
 		}
-	} else if r.Type == models.ReservationActivity {
+	case models.ReservationActivity:
 		var cap int
 		err = tx.QueryRow("SELECT capacity FROM activities WHERE id = ?", r.ItemID).Scan(&cap)
 		if err != nil {
@@ -93,7 +94,7 @@ func (s *SQLiteStore) ReserveItem(r *models.Reservation) error {
 		if _, err := tx.Exec("UPDATE activities SET capacity = capacity - 1 WHERE id = ?", r.ItemID); err != nil {
 			return err
 		}
-	} else {
+	default:
 		return errors.New("invalid reservation type")
 	}
 
