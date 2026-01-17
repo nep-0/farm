@@ -12,8 +12,12 @@ type Repository interface {
 	UpdateCustomerName(id string, name string) (*models.Customer, error)
 	AddProduct(p *models.Product) error
 	GetProduct(id string) (*models.Product, error)
+	GetAllProducts(visibleOnly bool) ([]*models.Product, error)
+	UpdateProduct(p *models.Product) error
 	AddActivity(a *models.Activity) error
 	GetActivity(id string) (*models.Activity, error)
+	GetAllActivities(visibleOnly bool) ([]*models.Activity, error)
+	UpdateActivity(a *models.Activity) error
 	AddReservation(r *models.Reservation) error
 	GetAllReservations() ([]*models.Reservation, error)
 	ReserveItem(r *models.Reservation) error

@@ -102,6 +102,8 @@ func main() {
 
 	r.GET("/me", handler.GetMe)
 	r.PUT("/me", handler.UpdateMe)
+	r.GET("/products", handler.ListProducts)
+	r.GET("/activities", handler.ListActivities)
 	r.POST("/reserve", handler.CreateReservation)
 
 	// Admin Routes
@@ -109,7 +111,11 @@ func main() {
 	admin.Use(handler.AdminOnly)
 
 	admin.POST("/products", handler.CreateProduct)
+	admin.PUT("/products/:id", handler.UpdateProduct)
+	admin.GET("/products", handler.ListAllProducts)
 	admin.POST("/activities", handler.CreateActivity)
+	admin.PUT("/activities/:id", handler.UpdateActivity)
+	admin.GET("/activities", handler.ListAllActivities)
 	admin.GET("/reservations", handler.ListReservations)
 	admin.GET("/users", handler.ListUsers)
 	admin.POST("/users/:id/credits", handler.UpdateCredits)

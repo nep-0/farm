@@ -44,12 +44,18 @@ func (s *SQLiteStore) InitDB() error {
 		`CREATE TABLE IF NOT EXISTS products (
 			id TEXT PRIMARY KEY,
 			name TEXT,
-			quantity INTEGER
+			description TEXT,
+			image_url TEXT,
+			quantity INTEGER,
+			visible BOOLEAN
 		);`,
 		`CREATE TABLE IF NOT EXISTS activities (
 			id TEXT PRIMARY KEY,
 			name TEXT,
-			capacity INTEGER
+			description TEXT,
+			image_url TEXT,
+			capacity INTEGER,
+			visible BOOLEAN
 		);`,
 		`CREATE TABLE IF NOT EXISTS reservations (
 			id TEXT PRIMARY KEY,

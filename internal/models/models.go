@@ -42,15 +42,21 @@ type Customer struct {
 }
 
 type Product struct {
-	ID       string `json:"id"`
-	Name     string `json:"name"`
-	Quantity int    `json:"quantity"`
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	ImageURL    string `json:"image_url"`
+	Quantity    int    `json:"quantity"`
+	Visible     bool   `json:"visible"`
 }
 
 type Activity struct {
-	ID       string `json:"id"`
-	Name     string `json:"name"`
-	Capacity int    `json:"capacity"`
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	ImageURL    string `json:"image_url"`
+	Capacity    int    `json:"capacity"`
+	Visible     bool   `json:"visible"`
 }
 
 type ReservationType string

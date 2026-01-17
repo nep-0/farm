@@ -61,6 +61,19 @@ func (h *Handler) CreateProduct(c echo.Context) error {
 	return c.JSON(http.StatusCreated, p)
 }
 
+func (h *Handler) UpdateProduct(c echo.Context) error {
+	id := c.Param("id")
+	var p models.Product
+	if err := c.Bind(&p); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid request"})
+	}
+	p.ID = id
+	if err := h.store.UpdateProduct(&p); err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+	return c.JSON(http.StatusOK, p)
+}
+
 func (h *Handler) CreateActivity(c echo.Context) error {
 	var a models.Activity
 	if err := c.Bind(&a); err != nil {
@@ -73,6 +86,19 @@ func (h *Handler) CreateActivity(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 	return c.JSON(http.StatusCreated, a)
+}
+
+func (h *Handler) UpdateActivity(c echo.Context) error {
+	id := c.Param("id")
+	var a models.Activity
+	if err := c.Bind(&a); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid request"})
+	}
+	a.ID = id
+	if err := h.store.UpdateActivity(&a); err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+	return c.JSON(http.StatusOK, a)
 }
 
 func (h *Handler) ListReservations(c echo.Context) error {
