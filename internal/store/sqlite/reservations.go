@@ -31,6 +31,29 @@ func (s *SQLiteStore) GetAllReservations() ([]*models.Reservation, error) {
 	return reservations, nil
 }
 
+func (s *SQLiteStore) GetReservationsByCustomerID(customerID string) ([]*models.Reservation, error) {
+	rows, err := s.db.Query("SELECT id, customer_id, item_id, type, priority_rank, timestamp, status FROM reservations WHERE customer_id = ?", customerID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var reservations []*models.Reservation
+	for rows.Next() {
+		var r models.Reservation
+		if err := rows.Scan(&r.ID, &r.CustomerID, &r.ItemID, &r.Type, &r.PriorityRank, &r.Timestamp, &r.Status); err != nil {
+			return nil, err
+		}
+		reservations = append(reservations, &r)
+	}
+	return reservations, nil
+}
+
+func (s *SQLiteStore) DeleteReservation(id string) error {
+	_, err := s.db.Exec("DELETE FROM reservations WHERE id = ?", id)
+	return err
+}
+
 func (s *SQLiteStore) ReserveItem(r *models.Reservation) error {
 	tx, err := s.db.Begin()
 	if err != nil {

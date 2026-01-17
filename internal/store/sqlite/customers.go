@@ -75,3 +75,8 @@ func (s *SQLiteStore) UpdateCustomerName(id string, name string) (*models.Custom
 	}
 	return s.GetCustomer(id)
 }
+
+func (s *SQLiteStore) DeleteCustomer(id string) error {
+	_, err := s.db.Exec("DELETE FROM customers WHERE id = ?", id)
+	return err
+}

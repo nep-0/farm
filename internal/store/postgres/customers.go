@@ -75,3 +75,8 @@ func (s *PostgresStore) UpdateCustomerName(id string, name string) (*models.Cust
 	}
 	return s.GetCustomer(id)
 }
+
+func (s *PostgresStore) DeleteCustomer(id string) error {
+	_, err := s.db.Exec("DELETE FROM customers WHERE id = $1", id)
+	return err
+}

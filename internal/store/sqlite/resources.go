@@ -50,6 +50,11 @@ func (s *SQLiteStore) UpdateProduct(p *models.Product) error {
 	return err
 }
 
+func (s *SQLiteStore) DeleteProduct(id string) error {
+	_, err := s.db.Exec("DELETE FROM products WHERE id = ?", id)
+	return err
+}
+
 // Activity Implementation
 
 func (s *SQLiteStore) AddActivity(a *models.Activity) error {
@@ -93,5 +98,10 @@ func (s *SQLiteStore) GetAllActivities(visibleOnly bool) ([]*models.Activity, er
 func (s *SQLiteStore) UpdateActivity(a *models.Activity) error {
 	_, err := s.db.Exec("UPDATE activities SET name = ?, description = ?, image_url = ?, capacity = ?, visible = ? WHERE id = ?",
 		a.Name, a.Description, a.ImageURL, a.Capacity, a.Visible, a.ID)
+	return err
+}
+
+func (s *SQLiteStore) DeleteActivity(id string) error {
+	_, err := s.db.Exec("DELETE FROM activities WHERE id = ?", id)
 	return err
 }

@@ -20,5 +20,11 @@ type Repository interface {
 	UpdateActivity(a *models.Activity) error
 	AddReservation(r *models.Reservation) error
 	GetAllReservations() ([]*models.Reservation, error)
+	GetReservationsByCustomerID(customerID string) ([]*models.Reservation, error)
 	ReserveItem(r *models.Reservation) error
+
+	DeleteProduct(id string) error
+	DeleteActivity(id string) error
+	DeleteReservation(id string) error
+	DeleteCustomer(id string) error
 }

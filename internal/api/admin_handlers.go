@@ -47,6 +47,14 @@ func (h *Handler) UpdateRole(c echo.Context) error {
 	return c.JSON(http.StatusOK, updated)
 }
 
+func (h *Handler) DeleteUser(c echo.Context) error {
+	id := c.Param("id")
+	if err := h.store.DeleteCustomer(id); err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+	return c.NoContent(http.StatusNoContent)
+}
+
 func (h *Handler) CreateProduct(c echo.Context) error {
 	var p models.Product
 	if err := c.Bind(&p); err != nil {
@@ -72,6 +80,14 @@ func (h *Handler) UpdateProduct(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 	return c.JSON(http.StatusOK, p)
+}
+
+func (h *Handler) DeleteProduct(c echo.Context) error {
+	id := c.Param("id")
+	if err := h.store.DeleteProduct(id); err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+	return c.NoContent(http.StatusNoContent)
 }
 
 func (h *Handler) CreateActivity(c echo.Context) error {
@@ -101,12 +117,28 @@ func (h *Handler) UpdateActivity(c echo.Context) error {
 	return c.JSON(http.StatusOK, a)
 }
 
+func (h *Handler) DeleteActivity(c echo.Context) error {
+	id := c.Param("id")
+	if err := h.store.DeleteActivity(id); err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+	return c.NoContent(http.StatusNoContent)
+}
+
 func (h *Handler) ListReservations(c echo.Context) error {
 	list, err := h.store.GetAllReservations()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 	return c.JSON(http.StatusOK, list)
+}
+
+func (h *Handler) DeleteReservation(c echo.Context) error {
+	id := c.Param("id")
+	if err := h.store.DeleteReservation(id); err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+	return c.NoContent(http.StatusNoContent)
 }
 
 func (h *Handler) ListUsers(c echo.Context) error {

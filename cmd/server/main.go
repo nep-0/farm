@@ -102,6 +102,7 @@ func main() {
 
 	r.GET("/me", handler.GetMe)
 	r.PUT("/me", handler.UpdateMe)
+	r.GET("/reservations", handler.ListMyReservations)
 	r.GET("/products", handler.ListProducts)
 	r.GET("/activities", handler.ListActivities)
 	r.POST("/reserve", handler.CreateReservation)
@@ -112,12 +113,16 @@ func main() {
 
 	admin.POST("/products", handler.CreateProduct)
 	admin.PUT("/products/:id", handler.UpdateProduct)
+	admin.DELETE("/products/:id", handler.DeleteProduct)
 	admin.GET("/products", handler.ListAllProducts)
 	admin.POST("/activities", handler.CreateActivity)
 	admin.PUT("/activities/:id", handler.UpdateActivity)
+	admin.DELETE("/activities/:id", handler.DeleteActivity)
 	admin.GET("/activities", handler.ListAllActivities)
 	admin.GET("/reservations", handler.ListReservations)
+	admin.DELETE("/reservations/:id", handler.DeleteReservation)
 	admin.GET("/users", handler.ListUsers)
+	admin.DELETE("/users/:id", handler.DeleteUser)
 	admin.POST("/users/:id/credits", handler.UpdateCredits)
 	admin.POST("/users/:id/role", handler.UpdateRole)
 

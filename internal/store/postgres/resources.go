@@ -50,6 +50,11 @@ func (s *PostgresStore) UpdateProduct(p *models.Product) error {
 	return err
 }
 
+func (s *PostgresStore) DeleteProduct(id string) error {
+	_, err := s.db.Exec("DELETE FROM products WHERE id = $1", id)
+	return err
+}
+
 // Activity Implementation
 
 func (s *PostgresStore) AddActivity(a *models.Activity) error {
@@ -93,5 +98,10 @@ func (s *PostgresStore) GetAllActivities(visibleOnly bool) ([]*models.Activity, 
 func (s *PostgresStore) UpdateActivity(a *models.Activity) error {
 	_, err := s.db.Exec("UPDATE activities SET name = $1, description = $2, image_url = $3, capacity = $4, visible = $5 WHERE id = $6",
 		a.Name, a.Description, a.ImageURL, a.Capacity, a.Visible, a.ID)
+	return err
+}
+
+func (s *PostgresStore) DeleteActivity(id string) error {
+	_, err := s.db.Exec("DELETE FROM activities WHERE id = $1", id)
 	return err
 }

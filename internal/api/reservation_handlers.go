@@ -46,3 +46,14 @@ func (h *Handler) CreateReservation(c echo.Context) error {
 
 	return c.JSON(http.StatusCreated, reservation)
 }
+
+func (h *Handler) ListMyReservations(c echo.Context) error {
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(*auth.JWTClaims)
+
+	reservations, err := h.store.GetReservationsByCustomerID(claims.UserID)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+	return c.JSON(http.StatusOK, reservations)
+}
